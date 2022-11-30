@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NewPasswordController;
+use App\Http\Controllers\EmailVerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,5 +28,19 @@ Route::group(['prefix' => 'auth'], function () {
     Route::group(['middleware' => 'auth:sanctum'], function() {
       Route::post('logout', [AuthController::class, 'logout']);
       Route::get('profile', [AuthController::class, 'user']);
+      Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail']);
+      Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
+      
+      Route::group(['middleware' => 'verified'], function() {
+        
+        Route::get('/user', function (Request $request) {
+            return $request->user();
+        });
+        
+      });
+
     });
-  });
+    Route::post('forgot-password', [NewPasswordController::class, 'forgotPassword']);
+    Route::post('reset-password', [NewPasswordController::class, 'reset']);
+
+});
