@@ -57,7 +57,6 @@ class NewPasswordController extends Controller
         );
 
         if ($status == Password::PASSWORD_RESET) {
-            $request->user()->tokens()->delete();
             return response([
                 'message'=> 'Password reset successfully'
             ]);

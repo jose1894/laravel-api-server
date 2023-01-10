@@ -23,8 +23,14 @@ class TipoPolizaRequest extends FormRequest
      */
     public function rules()
     {
+        
+        $id = "";
+        if (request()->method() === 'PATCH' || request()->method() === 'PUT'){
+            $id = $this->tipo_poliza;
+        }
+
         return [
-            'descripcion' => 'required|unique:tipo_poliza|max:100'
+            'descripcion' => 'required|max:100|unique:tipo_poliza,id,'.$id
         ];
     }
 }
