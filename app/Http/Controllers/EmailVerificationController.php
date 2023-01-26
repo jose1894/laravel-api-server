@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Auth\Events\Verified;
 
 class EmailVerificationController extends Controller
 {
@@ -30,7 +31,7 @@ class EmailVerificationController extends Controller
         }
 
         if ($request->user()->markEmailAsVerified()) {
-            event(new \Verified($request->user()));
+            event(new Verified($request->user()));
         }
 
         return [
