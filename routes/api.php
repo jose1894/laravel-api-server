@@ -47,7 +47,8 @@ Route::group(['prefix' => 'auth'], function () {
   
 Route::group(['middleware' => ['auth:sanctum','verified']], function() {
   // Tipo poliza
-  Route::resource('tipo-poliza',TipoPolizaController::class,['except'=>['edit','create'] ])->middleware("permission: tipo-poliza:manage");
+  // Route::resource('tipo-poliza',TipoPolizaController::class,['except'=>['edit','create'] ])->middleware("permission: tipo-poliza:manage");
+  Route::resource('tipo-poliza',TipoPolizaController::class,['except'=>['edit','create'] ]);
 
   // Route::resource('roles', RolesController::class);
   // Route::resource('permissions', PermissionsController::class);
